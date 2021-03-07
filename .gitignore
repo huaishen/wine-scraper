@@ -2,3 +2,6 @@
 /.idea/
 __pycache__/
 test.*
+/data/
+*.json
+.idea/
