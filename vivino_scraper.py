@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 
 
+
 class VivinoScraper(object):
     def __init__(self):
         self.browser = None
