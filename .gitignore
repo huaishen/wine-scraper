@@ -4,4 +4,6 @@ __pycache__/
 test.*
 /data/
 *.json
-/.idea
+.idea/
+*.zip
+.DS_Store
