@@ -14,6 +14,7 @@ directory = os.fsencode(directory_name)
 data = []
 for file in os.listdir(directory):
     file_name = os.fsdecode(file)
+    print(file_name)
     temp = read_json_as_dict(directory_name, file_name)
     data += [value['explore_vintage']['matches'] for _, value in temp.items()]
 
@@ -28,10 +29,18 @@ def parse_wine(record):
                record['vintage']['wine']['name'],
                record['vintage']['wine']['id'],
                record['vintage']['wine']['type_id'],
-               record['vintage']['wine']['taste']['flavor'],
-               record['vintage']['wine']['winery']['id'],
-               record['vintage']['wine']['winery']['name'],
-               record['price']['amount']]
+               record['vintage']['wine']['taste']['flavor']]
+    if record['vintage']['wine']['winery']:
+        result += [record['vintage']['wine']['winery']['id'],
+               record['vintage']['wine']['winery']['name']]
+    else:
+        result += [None] * 2 
+        
+    if record['price']:
+        result += [record['price']['amount']]
+    else:
+        result += [None]
+        
     if record['vintage']['wine']['region']:
         result += [record['vintage']['wine']['region']['name'],
                    record['vintage']['wine']['region']['id'],
@@ -61,7 +70,7 @@ def parse_wine(record):
                    record['vintage']['wine']['style']['food'],
                    record['vintage']['wine']['style']['grapes']]
     else:
-        result += [None] * 12
+        result += [None] * 11
     return result
 
 
@@ -75,4 +84,4 @@ df.columns = ['id', 'year', 'name', 'rating', 'rating_count', 'name', 'wine_id',
               'style_body', 'style_body_desp', 'style_acidity',
               'style_acidity_desp', 'style_food', 'style_grapes']
 df.drop_duplicates(subset='id')
-df.to_excel('data/vivino_wines.xlsx', index=False)
+df.to_excel('output/vivino_wines.xlsx', index=False)
