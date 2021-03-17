@@ -4,7 +4,18 @@ import time
 import math
 from common.utils import save_as_json
 
-HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0"}
+HEADERS = {
+            'Accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+            'Cache-Control': 'max-age=0',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.1.4324.150 Safari/537.36',
+            'sec-ch-ua': '"Chromium";v="88", "Google Chrome";v="88", ";Not A Brand";v="99"',
+            'Referer': 'https://www.vivino.com/FR/en/guerrieri-guerriero-della-terra/w/6331780?year=2017&price_id=22519679',
+            'sec-ch-ua-mobile': '?0',
+            'sec-fetch-site': 'same-origin',
+            'upgrade-insecure-requests': '1',
+            'dnt': '1',
+            'x-requested-swith': 'XMLHttpRequest'}
 
 class Vivino:
     def __init__(self, params, max_page=50):
@@ -74,23 +85,24 @@ partitions = [0, 70, 80, 90, 100, 120, 150, 200, 350, 600, 100000]
 
 regions = requests.get('https://www.vivino.com/api/regions', headers=HEADERS).json()
 
-for region in regions['regions'][166:]:
+for region in regions['regions']:
     region_name = region['seo_name']
     price_min = 0
     price_max = 100000
     print('Scraping region {}...'.format(region_name))
     all_params = {
             "country_code": "fr",
-            "region_ids[]": [region['id']],
+            "country_codes[]": ["de"],
             "currency_code": "SGD",
             "grape_filter": "varietal",
             "min_rating": "1",
             "order_by": "ratings_count",
             "order": "desc",
-            "page": 1,
+            "page": 100,
             "price_range_max": price_max,
             "price_range_min": price_min,
-            "wine_type_ids[]": [1, 2, 3, 4, 7, 24]
+            "wine_type_ids[]": [1, 2, 3, 4, 7, 24],
+            "per_page": 100,
         }
     count, _ = Vivino(all_params).get_count_and_page()
     if count == 0:

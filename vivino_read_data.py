@@ -83,5 +83,6 @@ df.columns = ['id', 'year', 'name', 'rating', 'rating_count', 'name', 'wine_id',
               'style_id', 'style_name', 'style_region_name', 'style_region_id', 'style_varietal_name',
               'style_body', 'style_body_desp', 'style_acidity',
               'style_acidity_desp', 'style_food', 'style_grapes']
+
 df.drop_duplicates(subset='id')
 df.to_excel('output/vivino_wines.xlsx', index=False)
