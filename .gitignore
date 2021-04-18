@@ -1,2 +1,12 @@
 /venv/
 /.idea/
+__pycache__/
+test.*
+/data/
+*.json
+.idea/
+*.zip
+.DS_Store
+/archive/
+*.csv
+*.xlsx
