@@ -133,8 +133,8 @@ with open('processed/wine_price.json', 'w') as f:
 
 # Location
 import googlemaps
-api_key = 'AIzaSyBN5DGexhkC9Nlz73J27tqawb5FCrJfBfA'
-g = googlemaps.Client(key='AIzaSyBN5DGexhkC9Nlz73J27tqawb5FCrJfBfA')
+api_key = ''
+g = googlemaps.Client(key=api_key)
 failed_row = set()
 for _, row in df_winery_region.iloc.iterrows():
     location = row.name
@@ -218,6 +218,7 @@ wine_style_output['id'] = wine_style_output['id'].map(lambda x: 'w' + str(int(x)
 
 food_wine_df = pd.concat([food_df, wine_style_output])[['id', 'name', 'image', 'group', 'type_name']]
 food_wine_df.to_json('processed/style_food_data.json', 'records')
+
 
 def count_topN_orderBy(df, column, n, ascending=False):
     return df.sort_values(column, ascending=ascending).head(n).to_dict('records')
